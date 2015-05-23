@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" ng-app="ccModule">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width initial-scale=1 maximum-scale=1 user-scalable=no">
+<title></title>
+<link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+<div class="container">
+    <h2 class="text-center">define a filter</h2>
+    <p class="alert alert-info">{{'fhcc' | filter1}}</p>
+    <p class="alert alert-info">{{'fhcc' | filter1}}</p>
+    <p class="alert alert-info">{{'fhcc' | filter2}}</p>
+    <p class="alert alert-info">{{'fhcc' | filter3}}</p>
+    <p class="alert alert-info">{{'fhcc' | filter2}}</p>
+    {{'fhcc' | filter3}}
+</div>
+
+<script src="js/angular.min.js"></script>    
+<script type="text/javascript">
+'use strict'
+angular.module('ccModule', [])
+    .filter('filter1', function(){
+        return function(item){
+            return item + 'hello'
+        }
+    })
+    .filter('filter2', function(){
+        return function(item){
+            return '<span>you mother cc</span>' + item 
+        }
+    })
+    .filter('filter3', function(){
+        return function(item){
+            return '<div class="alert alert-danger">' + item + '</div>'
+        }
+    })
+</script>
+</body>
+</html>

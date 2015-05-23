@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" ng-app="accordionModule">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width initial-scale=1 maximum-scale=1 user-scalable=no">
+<title></title>
+<link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+<div class="container" ng-controller="accordionCtrl">
+    <h2 class="text-center">accordion</h2>
+    <accordion>
+        <expander class="expander" ng-repeat="expander in expanders" expander-title="expander.title">
+            {{ expander.content }}
+        </expander>
+    </accordion>
+</div>
+
+<script src="js/angular.min.js"></script>    
+<script type="text/javascript">
+'use strict'
+
+angular.module('accordionModule', [])
+    .directive('accordion', function(){
+        return {
+            restrict: 'AE', 
+            replace: true, 
+            transclude: true, 
+            template: '<div ng-transclude></div>', 
+            controller: function(){
+                var expanders = []
+                
+                this.gotOpened = function(selectedExpander){
+                    angular.forEach(expanders, function(expander){
+                        if(selectedExpander != expander){
+                            expander.showMe = false
+                        }
+                    })
+                }
+
+                this.addExpander = function(expander){
+                    expanders.push(expander)
+                }
+            }
+        }
+    })
+    .directive('expander', function(){
+        return {
+            restrict: 'AE', 
+            replace: true, 
+            transclude: true, 
+            require: '^?accordion', 
+            scope: {
+                title: '=expanderTitle'
+            }, 
+            template: '<div class="panel panel-primary">'+
+                        '<div class="panel-heading" ng-click="toggle()">{{title}}</div>'+
+                        '<div class="panel-body" ng-show="showMe" ng-transclude>{{content}}</div>'+
+                      '</div>', 
+            link: function(scope, element, attrs, accordionCtrl){
+                scope.showMe = false
+                accordionCtrl.addExpander(scope)
+                scope.toggle = function toggle(){
+                    scope.showMe = !scope.showMe
+                    accordionCtrl.gotOpened(scope)
+                } 
+            }
+        }
+    })
+    .controller('accordionCtrl', function($scope){
+        $scope.expanders = [
+            {
+                title: 'clickme to expand', 
+                content: 'you mother fucker'
+            }, 
+            {
+                title: 'clickme to expand', 
+                content: 'you mother fucker'
+            }, 
+            {
+                title: 'clickme to expand', 
+                content: 'you mother fucker'
+            }, 
+            {
+                title: 'clickme to expand', 
+                content: 'you mother fucker'
+            }
+        ]
+    })
+
+</script>
+</body>
+</html>

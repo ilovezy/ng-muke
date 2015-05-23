@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" ng-app>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width initial-scale=1 maximum-scale=1 user-scalable=no">
+<title></title>
+<link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+<div class="container" id="container">
+    <h2 class="text-center">ng 分析</h2>
+    
+</div>
+
+<script src="js/angular.min.js"></script>    
+<script type="text/javascript">
+'use strict'
+
+function depart(angular){
+    var container = document.getElementById('container')
+    for(var item in angular){
+        if(typeof angular[item] === 'function'){
+            container.innerHTML += 'function -> ' + item + '<br>'
+        }else{
+            container.innerHTML += 'property -> ' + item + '<br>'
+        }
+    }
+}
+
+console.log(typeof depart)
+
+depart(angular)
+
+</script>
+</body>
+</html>

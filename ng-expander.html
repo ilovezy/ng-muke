@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" ng-app="expanderModule">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width initial-scale=1 maximum-scale=1 user-scalable=no">
+<title></title>
+<link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+<div class="container" ng-controller="expanderCtrl">
+    <h2 class="text-center">expander</h2>
+    <expander class="expander" expander-title="title">
+        {{ content }}
+    </expander>
+</div>
+
+<script src="js/angular.min.js"></script>    
+<script type="text/javascript">
+'use strict'
+
+angular.module('expanderModule', [])
+    .directive('expander', function(){
+        return {
+            restrict: 'AE', 
+            replace: true, 
+            transclude: true, 
+            scope: { title: '=expanderTitle' }, 
+            template: '<div class="panel panel-success">'+
+                        '<div class="panel-heading" ng-click="toggle()">{{ title }}</div>'+
+                        '<div class="panel-body" ng-show="showMe" ng-transclude>{{ content }}</div>'+
+                      '</div>', 
+            link: function(scope, element, attrs){
+                scope.showMe = false
+                scope.toggle = function(){
+                    scope.showMe = !scope.showMe
+                }
+            }
+        }        
+    })
+    .controller('expanderCtrl', function($scope){
+        $scope.title = 'click to open'
+        $scope.content = 'you mother fucker'
+    })
+
+</script>
+</body>
+</html>
